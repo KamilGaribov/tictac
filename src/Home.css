@@ -1,0 +1,136 @@
+.home {
+  width: 100vw;
+  height: 88vh;
+  background-color: #1b1c22;
+  color: whitesmoke;
+}
+.home-inner{
+  width: 100%;
+  height: 100%;
+}
+.home-inner > div {
+  float: left;
+  height: 100%;
+}
+.left {
+  width: 80%;
+  display: grid;
+  grid-template-columns: 400px auto;
+}
+.right {
+  width: 20%;
+  padding-right: 20px;
+}
+.right > div:nth-child(1) {
+  text-align: center;
+  padding-top: 5px;
+}
+table {
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border: 2px solid aqua;
+}
+td {
+  border: 1px solid aqua;
+}
+thead td {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px;
+}
+tbody td {
+  font-size: 14px;
+  height: 25px;
+  padding: 5px;
+}
+.new-game-btn {
+  padding: 20px 0 0 20px;
+}
+.right > :nth-child(2) tbody td:nth-child(1){
+  cursor: pointer;
+}
+.new-game-btn button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  width: 100px;
+  height: 50px;
+  background-color: #3c50fa;
+  color: whitesmoke;
+}
+.game {
+  margin-top: 20px;
+  width: 450px;
+  height: 450px;
+  background-color: #23242a;
+  position: relative;
+}
+.game::before {
+  position: absolute;
+  content: "";
+  left: 5%;
+  bottom: 70px;
+  width: 90%;
+  height: 10px;
+  background-color: #F1C40F;
+  z-index: 1;
+  border-radius: 50px;
+}
+.game img {
+  width: 60%;
+  height: auto;
+  display: block;
+  margin: auto;
+  position: relative;
+  top: 20%;
+}
+.game > div {
+  float: left;
+  width: 33.3%;
+  height: 33.3%;
+  border-left: 3px solid whitesmoke;
+  cursor: pointer;
+}
+.game > div:hover{
+  background-color: #34363f !important;
+}
+.game > div:nth-child(3) ~ div {
+  border-top: 3px solid whitesmoke;
+}
+.game > div:nth-child(3n + 1) {
+  border-left: none;
+  clear: left;
+}
+td:nth-child(2) {
+  width: 30px;
+}
+td:nth-child(3){
+  width: 30px;
+}
+tr img {
+  height: 20px;
+  width: auto;
+}
+.right > :nth-child(3){
+  height: 20px;
+  width: 70px;
+  margin: auto;
+}
+.right > :nth-child(3) > a{
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+  padding: 5px;
+  float: left;
+  color: #3c50fa;
+}
+.right > :nth-child(4), .right > :nth-child(4) *{
+  border: none;
+}
+.right > :nth-child(4){
+  padding-left: 5px;
+}
+.page-active{
+  text-decoration: none !important;
+}

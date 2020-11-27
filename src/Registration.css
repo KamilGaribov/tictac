@@ -1,0 +1,30 @@
+.registration {
+  width: 100vw;
+  height: 88vh;
+  background-color: #1b1c22;
+}
+.registration form {
+  width: 400px;
+  height: 300px;
+  position: relative;
+  top: 100px;
+  margin: auto;
+  background-color: aqua;
+}
+form {
+  padding: 50px;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+}
+form > input{
+    padding: 5px;
+    margin: 5px;
+}
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: #3c50fa;
+  color: whitesmoke;
+  margin: 5px;
+}
