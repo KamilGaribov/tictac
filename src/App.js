@@ -10,6 +10,42 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      getGames: () => {
+        let form2 = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        };
+        let url2 = `http://localhost:8000/api/v1/games/`;
+        fetch(url2, form2)
+          .then((res) => res.json())
+          .then((response) => {
+            this.setState({ games: response.results });
+            this.setState({nextUrl: response.next})
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    
+          let form3 = {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: localStorage.getItem("token"),
+            },
+          };
+          let url3 = `http://localhost:8000/api/v1/games/statistic/`;
+          fetch(url3, form3)
+            .then((res) => res.json())
+            .then((response) => {
+              this.setState({statistics: response.data})
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+      },
       statistics: null,
       games: null,
       username: null,
@@ -17,6 +53,7 @@ export default class App extends React.Component {
       setLogged: (val) => {
         this.setState({ username: val });
         this.setState({ logged: true });
+        this.state.getGames()
       },
       previousUrl: null,
       nextUrl: null,
@@ -95,40 +132,8 @@ export default class App extends React.Component {
         this.setState({ username: null });
       });
 
-    let form2 = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"),
-      },
-    };
-    let url2 = `http://localhost:8000/api/v1/games/`;
-    fetch(url2, form2)
-      .then((res) => res.json())
-      .then((response) => {
-        this.setState({ games: response.results });
-        this.setState({nextUrl: response.next})
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.state.getGames()
 
-      let form3 = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
-        },
-      };
-      let url3 = `http://localhost:8000/api/v1/games/statistic/`;
-      fetch(url3, form3)
-        .then((res) => res.json())
-        .then((response) => {
-          this.setState({statistics: response.data})
-        })
-        .catch((error) => {
-          console.log(error);
-        });
   }
   render() {
     return (

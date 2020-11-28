@@ -8,6 +8,7 @@ export default function Registration() {
         <div className="registration">
           <form>
             <h3>Registration</h3>
+            {state.regError ? (<span>{state.regError}</span>) : null}
             <input name="email" placeholder="email" type="email" />
             <input name="password" placeholder="password" type="password" />
             {state.renderRedirectLogin()}
