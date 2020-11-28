@@ -15,7 +15,16 @@
 .left {
   width: 80%;
   display: grid;
-  grid-template-columns: 400px auto;
+  grid-template-columns: 200px 200px auto;
+}
+.left > :nth-child(2){
+  padding-top: 20px;
+}
+.left > :nth-child(2) > :nth-child(2){
+  color: greenyellow;
+}
+.left > :nth-child(2) > :nth-child(3){
+  color: red;
 }
 .right {
   width: 20%;
@@ -24,6 +33,13 @@
 .right > div:nth-child(1) {
   text-align: center;
   padding-top: 5px;
+}
+.right > div:nth-child(3) span{
+  color: #3c50fa;
+  font-weight: 100;
+  margin: 5px;
+  font-size: 14px;
+  cursor: pointer;
 }
 table {
   width: 100%;
@@ -65,17 +81,6 @@ tbody td {
   height: 450px;
   background-color: #23242a;
   position: relative;
-}
-.game::before {
-  position: absolute;
-  content: "";
-  left: 5%;
-  bottom: 70px;
-  width: 90%;
-  height: 10px;
-  background-color: #F1C40F;
-  z-index: 1;
-  border-radius: 50px;
 }
 .game img {
   width: 60%;
@@ -133,4 +138,63 @@ tr img {
 }
 .page-active{
   text-decoration: none !important;
+}
+.game::before {
+  position: absolute;
+  /* content: ""; */
+  /* left: 5%;
+  top: 70px; */
+  width: 90%;
+  height: 10px;
+  background-color: #F1C40F;
+  z-index: 1;
+  border-radius: 50px;
+}
+.one::before {
+  content: "";
+  left: 5%;
+  top: 70px;
+}
+.two::before{
+  content: "";
+  left: 5%;
+  top: 50%;
+}
+.three::before{
+  content: "";
+  left: 5%;
+  bottom: 70px;
+}
+.four::before{
+  width: 10px;
+  height: 90%;
+  content: "";
+  left: 70px;
+  bottom: 5%;
+}
+.five::before{
+  width: 10px;
+  height: 90%;
+  content: "";
+  left: 50%;
+  bottom: 5%;
+}
+.six::before{
+  width: 10px;
+  height: 90%;
+  content: "";
+  right: 70px;
+  bottom: 5%;
+}
+.seven::before{
+  content: "";
+  right: 20px;
+  top: 50%;
+  transform: rotate(45deg);
+}
+.eight::before{
+  content: "";
+  left: 20px;
+  top: 50%;
+  transform: rotate(-45deg);
 }

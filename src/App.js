@@ -10,52 +10,81 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      statistics: null,
+      games: null,
       username: null,
       logged: false,
       setLogged: (val) => {
         this.setState({ username: val });
         this.setState({ logged: true });
       },
+      previousUrl: null,
+      nextUrl: null,
+      next: () => {
+        let form = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        };
+        fetch(this.state.nextUrl, form)
+          .then((res) => res.json())
+          .then((response) => {
+            this.setState({ games: response.results });
+            this.setState({nextUrl: response.next})
+            this.setState({previousUrl: response.previous})
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
+      previous: () => {
+        let form = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        };
+        fetch(this.state.previousUrl, form)
+          .then((res) => res.json())
+          .then((response) => {
+            this.setState({ games: response.results });
+            this.setState({nextUrl: response.next})
+            this.setState({previousUrl: response.previous})
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
     };
   }
-  login = () => {
-    localStorage.setItem("username", "Aydin");
-    this.setState({ logged: true });
-  };
   logout = () => {
-    localStorage.removeItem("username");
-    localStorage.removeItem("refresh_token");
-    localStorage.removeItem("access_token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("token");
     this.setState({ logged: false });
     this.setState({ username: null });
   };
   componentDidMount() {
+    if (!localStorage.getItem("token")) {
+      this.setState({ logged: false });
+      return this.setState({ username: null });
+    }
     let form = {
-      method: "POST",
-      // mode: "cors",
-      // cache: "no-cache",
-      // credentials: "same-origin",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // "Device": "device",
-        // "Token": localStorage.getItem("access_token"),
-        // "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
-        // "Access-Control-Allow-Origin": "localhost:3000"
+        Authorization: localStorage.getItem("token"),
       },
-      // redirect: "follow",
-      // referrer: "no-referrer",
-      body: JSON.stringify({
-        refresh: localStorage.getItem("refresh_token"),
-      }),
     };
-    let url = `http://localhost:8000/api/v1/refresh/`;
+    let url = `http://localhost:8000/api/v1/user`;
     fetch(url, form)
       .then((res) => res.json())
       .then((response) => {
-        console.log("response: ", response);
-        if (response.refresh && response.access) {
+        if (response.email) {
           this.setState({ logged: true });
-          this.setState({ username: localStorage.getItem("username") });
+          this.setState({ username: localStorage.getItem("email") });
         } else {
           this.setState({ logged: false });
           this.setState({ username: null });
@@ -66,13 +95,40 @@ export default class App extends React.Component {
         this.setState({ username: null });
       });
 
-    // if (localStorage.getItem("username")) {
-    //   this.setState({ logged: true });
-    //   this.setState({ username: localStorage.getItem("username") });
-    // } else {
-    //   this.setState({ logged: false });
-    //   this.setState({ username: null });
-    // }
+    let form2 = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    };
+    let url2 = `http://localhost:8000/api/v1/games/`;
+    fetch(url2, form2)
+      .then((res) => res.json())
+      .then((response) => {
+        this.setState({ games: response.results });
+        this.setState({nextUrl: response.next})
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      let form3 = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      };
+      let url3 = `http://localhost:8000/api/v1/games/statistic/`;
+      fetch(url3, form3)
+        .then((res) => res.json())
+        .then((response) => {
+          this.setState({statistics: response.data})
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   }
   render() {
     return (
