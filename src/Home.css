@@ -136,6 +136,9 @@ tr img {
 .right > :nth-child(4){
   padding-left: 5px;
 }
+.right > :nth-child(4) tr > td:nth-child(1){
+  cursor: pointer;
+}
 .page-active{
   text-decoration: none !important;
 }

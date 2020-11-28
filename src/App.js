@@ -46,6 +46,24 @@ export default class App extends React.Component {
               console.log(error);
             });
       },
+      filter: (n) => {
+        let form = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        };
+        let url = `http://localhost:8000/api/v1/games/?result=${n}`;
+        fetch(url, form)
+          .then((res) => res.json())
+          .then((response) => {
+            this.setState({ games: response.results });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
       statistics: null,
       games: null,
       username: null,

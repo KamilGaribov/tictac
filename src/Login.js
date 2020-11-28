@@ -8,6 +8,7 @@ export default function Login({ props }) {
         <div className="registration">
           <form>
             <h3>Login</h3>
+            {state.logError ? (<span>{state.logError}</span>) : null}
             <input name="email" placeholder="email" type="email" />
             <input name="password" placeholder="password" type="password" />
             {state.renderRedirectHome()}

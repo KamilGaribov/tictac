@@ -116,28 +116,28 @@ function Home({ props }) {
                 <table>
                   <tbody>
                     <tr>
-                      <td>win</td>
+                      <td onClick={() => {props.state.filter(1)}}>win</td>
                       <td>
                         <img alt="img" src="win.png" />
                       </td>
                       <td>{stat ? stat.win : null}</td>
                     </tr>
                     <tr>
-                      <td>lose</td>
+                      <td onClick={() => {props.state.filter(2)}}>lose</td>
                       <td>
                         <img alt="img" src="lose.png" />
                       </td>
                       <td>{stat ? stat.lose : null}</td>
                     </tr>
                     <tr>
-                      <td>draw</td>
+                      <td onClick={() => {props.state.filter(-1)}}>draw</td>
                       <td>
                         <img alt="img" src="equal.png" />
                       </td>
                       <td>{stat ? stat.draw : null}</td>
                     </tr>
                     <tr>
-                      <td>continue</td>
+                      <td onClick={() => {props.state.filter(0)}}>continue</td>
                       <td>
                         <img alt="img" src="continue.png" />
                       </td>

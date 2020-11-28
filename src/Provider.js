@@ -5,6 +5,7 @@ const Context = React.createContext();
 
 class Provider extends Component {
   state = {
+    logError: null,
     regError: null,
     line: null,
     gameMessage: null,
@@ -282,10 +283,13 @@ class Provider extends Component {
               func(email);
               this.setState({ redirectHome: true });
             } else {
+              this.setState({logError: "An error occured"})
               console.log("error");
             }
           })
-          .catch((error) => console.log("error: ", error));
+          .catch((error) => {
+            this.setState({logError: "An error occured"})
+          })
       }
     },
     register: (e) => {
