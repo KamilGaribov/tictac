@@ -179,7 +179,7 @@ tr img {
   width: 10px;
   height: 90%;
   content: "";
-  left: 50%;
+  left: calc(50% - 5px);
   bottom: 5%;
 }
 .six::before{

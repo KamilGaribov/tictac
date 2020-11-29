@@ -49,7 +49,7 @@ export default class App extends React.Component {
       },
       newgame: () => {
         this.setState({ currentGame: true });
-        this.state.getGames();
+        // this.state.getGames();
       },
       filter: (n) => {
         let form = {
