@@ -35,6 +35,7 @@ class Provider extends Component {
           this.setState({ gameId: id });
           if (response.result === 1) {
             this.setState({ gameResult: "You win!" });
+            this.setState( {gameMessage: null})
             if (
               response.board[0] === "X" &&
               response.board[1] === "X" &&
@@ -85,6 +86,7 @@ class Provider extends Component {
               this.setState({ line: "eight" });
             }
           } else if (response.result === 2) {
+            this.setState( {gameMessage: null})
             this.setState({ gameResult: "Computer win" });
             if (
               response.board[0] === "O" &&
@@ -137,6 +139,7 @@ class Provider extends Component {
             }
           } else if (response.result === -1) {
             this.setState({ gameResult: "Draw" });
+            this.setState( {gameMessage: null})
             this.setState({ line: null });
           } else {
             this.setState({ gamePlayed: response.board });
@@ -187,6 +190,7 @@ class Provider extends Component {
           this.setState({ game: response });
           if (response.result_code === 1) {
             this.setState({ gameResult: "You win!" });
+            this.setState( {gameMessage: null})
             func()
             if (
               response.board[0] === "X" &&
@@ -239,6 +243,7 @@ class Provider extends Component {
             }
           } else if (response.result_code === 2) {
             this.setState({ gameResult: "Computer win" });
+            this.setState( {gameMessage: null})
             func()
             if (
               response.board[0] === "O" &&
@@ -291,6 +296,7 @@ class Provider extends Component {
             }
           } else if (response.result_code === -1) {
             this.setState({ gameResult: "Draw" });
+            this.setState( {gameMessage: null})
             func()
           } else {
             this.setState({ gamePlayed: response.board });
