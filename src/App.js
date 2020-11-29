@@ -41,15 +41,20 @@ export default class App extends React.Component {
           .then((res) => res.json())
           .then((response) => {
             this.setState({ statistics: response.data });
-            console.log("succes stat: ", response.data);
+            // this.setState({all: response.data.all})
+            // this.setState({continue: response.data.continue})
           })
           .catch((error) => {
             console.log(error);
           });
       },
+      // all: null,
+      // continue: null,
       newgame: () => {
         this.setState({ currentGame: true });
         this.state.getGames();
+        // this.setState({all: this.state.all+1})
+        // this.setState({continue: this.state.continue+1})
       },
       filter: (n) => {
         let form = {

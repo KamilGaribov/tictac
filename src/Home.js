@@ -3,7 +3,6 @@ import { Consumer } from "./Provider";
 
 function Home({ props }) {
   const stat = props.state.statistics
-  console.log(stat)
   const games = props.state.games;
   return (
     <Consumer>
@@ -30,7 +29,7 @@ function Home({ props }) {
                         <div
                           key={i}
                           onClick={(e) => {
-                            state.play(e);
+                            state.play(e, props.state.getGames);
                           }}
                         >
                           {item === "X" || item === "O" ? (

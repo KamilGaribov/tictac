@@ -151,7 +151,7 @@ class Provider extends Component {
       console.log("statenewgame");
       this.setState({ gameError: "Start new game" });
     },
-    play: (e) => {
+    play: (e, func) => {
       if (this.state.gameWatch) {
         return this.setState({ gameError: "Game has finished" });
       }
@@ -186,16 +186,7 @@ class Provider extends Component {
           this.setState({ game: response });
           if (response.result_code === 1) {
             this.setState({ gameResult: "You win!" });
-            document.querySelector(
-              ".right > :nth-child(4) tr:nth-child(1) td:nth-child(3)"
-            ).innerHTML = parseInt(document.querySelector(
-              ".right > :nth-child(4) tr:nth-child(1) td:nth-child(3)"
-            ).innerHTML) + 1;
-            document.querySelector(
-              ".right > :nth-child(4) tr:nth-child(4) td:nth-child(3)"
-            ).innerHTML = parseInt(document.querySelector(
-              ".right > :nth-child(4) tr:nth-child(4) td:nth-child(3)"
-            ).innerHTML) -1
+            func()
             if (
               response.board[0] === "X" &&
               response.board[1] === "X" &&
@@ -247,17 +238,7 @@ class Provider extends Component {
             }
           } else if (response.result_code === 2) {
             this.setState({ gameResult: "Computer win" });
-            document.querySelector(
-              ".right > :nth-child(4) tr:nth-child(2) td:nth-child(3)"
-            ).innerHTML =
-              parseInt(document.querySelector(
-                ".right > :nth-child(4) tr:nth-child(2) td:nth-child(3)"
-              ).innerHTML) + 1;
-              document.querySelector(
-                ".right > :nth-child(4) tr:nth-child(4) td:nth-child(3)"
-              ).innerHTML = parseInt(document.querySelector(
-                ".right > :nth-child(4) tr:nth-child(4) td:nth-child(3)"
-              ).innerHTML) -1
+            func()
             if (
               response.board[0] === "O" &&
               response.board[1] === "O" &&
@@ -309,17 +290,7 @@ class Provider extends Component {
             }
           } else if (response.result_code === -1) {
             this.setState({ gameResult: "Draw" });
-            document.querySelector(
-              ".right > :nth-child(4) tr:nth-child(3) td:nth-child(3)"
-            ).innerHTML = 
-            parseInt(document.querySelector(
-              ".right > :nth-child(4) tr:nth-child(3) td:nth-child(3)"
-            ).innerHTML) +1
-            document.querySelector(
-              ".right > :nth-child(4) tr:nth-child(4) td:nth-child(3)"
-            ).innerHTML = parseInt(document.querySelector(
-              ".right > :nth-child(4) tr:nth-child(4) td:nth-child(3)"
-            ).innerHTML) -1
+            func()
           } else {
             this.setState({ gamePlayed: response.board });
           }
