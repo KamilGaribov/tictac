@@ -23,32 +23,33 @@ export default class App extends React.Component {
           .then((res) => res.json())
           .then((response) => {
             this.setState({ games: response.results });
-            this.setState({nextUrl: response.next})
+            this.setState({ nextUrl: response.next });
           })
           .catch((error) => {
             console.log(error);
           });
-    
-          let form3 = {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: localStorage.getItem("token"),
-            },
-          };
-          let url3 = `http://localhost:8000/api/v1/games/statistic/`;
-          fetch(url3, form3)
-            .then((res) => res.json())
-            .then((response) => {
-              this.setState({statistics: response.data})
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+
+        let form3 = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        };
+        let url3 = `http://localhost:8000/api/v1/games/statistic/`;
+        fetch(url3, form3)
+          .then((res) => res.json())
+          .then((response) => {
+            this.setState({ statistics: response.data });
+            console.log("succes stat: ", response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       },
       newgame: () => {
-        this.setState({currentGame: true})
-        this.state.getGames()
+        this.setState({ currentGame: true });
+        this.state.getGames();
       },
       filter: (n) => {
         let form = {
@@ -75,7 +76,7 @@ export default class App extends React.Component {
       setLogged: (val) => {
         this.setState({ username: val });
         this.setState({ logged: true });
-        this.state.getGames()
+        this.state.getGames();
       },
       previousUrl: null,
       nextUrl: null,
@@ -91,8 +92,8 @@ export default class App extends React.Component {
           .then((res) => res.json())
           .then((response) => {
             this.setState({ games: response.results });
-            this.setState({nextUrl: response.next})
-            this.setState({previousUrl: response.previous})
+            this.setState({ nextUrl: response.next });
+            this.setState({ previousUrl: response.previous });
           })
           .catch((error) => {
             console.log(error);
@@ -110,8 +111,8 @@ export default class App extends React.Component {
           .then((res) => res.json())
           .then((response) => {
             this.setState({ games: response.results });
-            this.setState({nextUrl: response.next})
-            this.setState({previousUrl: response.previous})
+            this.setState({ nextUrl: response.next });
+            this.setState({ previousUrl: response.previous });
           })
           .catch((error) => {
             console.log(error);
@@ -125,7 +126,7 @@ export default class App extends React.Component {
     localStorage.removeItem("token");
     this.setState({ logged: false });
     this.setState({ username: null });
-    this.setState({ currentGame: false})
+    this.setState({ currentGame: false });
   };
   componentDidMount() {
     if (!localStorage.getItem("token")) {
@@ -156,8 +157,7 @@ export default class App extends React.Component {
         this.setState({ username: null });
       });
 
-    this.state.getGames()
-
+    this.state.getGames();
   }
   render() {
     return (
@@ -172,13 +172,7 @@ export default class App extends React.Component {
                   </Link>
                 </div>
                 <div>
-                  <Link
-                    exact="true"
-                    to="/registration"
-                    style={{ textDecoration: "none", color: "whitesmoke" }}
-                  >
-                    <span>{this.state.username}</span>
-                  </Link>
+                  <span>{this.state.username}</span>
                   <span onClick={this.logout}>logout</span>
                 </div>
               </nav>

@@ -3,6 +3,7 @@ import { Consumer } from "./Provider";
 
 function Home({ props }) {
   const stat = props.state.statistics
+  console.log(stat)
   const games = props.state.games;
   return (
     <Consumer>
@@ -18,9 +19,9 @@ function Home({ props }) {
                     }}>new game</button>
                 </div>
                 <div>
-                  <h3>{state.gameMessage && props.state.currentGame === true ? state.gameMessage : null}</h3>
-                  <h3>{state.gameResult && props.state.currentGame === true ? state.gameResult : null}</h3>
-                  <h3>{state.gameError && props.state.currentGame === true ? state.gameError : null}</h3>
+                  <h3>{state.gameMessage ? state.gameMessage : null}</h3>
+                  <h3>{state.gameResult ? state.gameResult : null}</h3>
+                  <h3>{state.gameError ? state.gameError : null}</h3>
                 </div>
                 {state.game != null && props.state.currentGame === true ? (
                   <div className={state.line != null ? `${state.line} game` : "game"}>

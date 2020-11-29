@@ -16,7 +16,7 @@ class Provider extends Component {
     gamePlayed: false,
     game: null,
     watchGame: (id) => {
-      this.setState({game: null})
+      this.setState({ game: null });
       this.setState({ gameResult: null });
       this.setState({ gameMessage: null });
       this.setState({ gameError: null });
@@ -148,6 +148,7 @@ class Provider extends Component {
         });
     },
     startnewgame: () => {
+      console.log("statenewgame");
       this.setState({ gameError: "Start new game" });
     },
     play: (e) => {
@@ -185,6 +186,16 @@ class Provider extends Component {
           this.setState({ game: response });
           if (response.result_code === 1) {
             this.setState({ gameResult: "You win!" });
+            document.querySelector(
+              ".right > :nth-child(4) tr:nth-child(1) td:nth-child(3)"
+            ).innerHTML = parseInt(document.querySelector(
+              ".right > :nth-child(4) tr:nth-child(1) td:nth-child(3)"
+            ).innerHTML) + 1;
+            document.querySelector(
+              ".right > :nth-child(4) tr:nth-child(4) td:nth-child(3)"
+            ).innerHTML = parseInt(document.querySelector(
+              ".right > :nth-child(4) tr:nth-child(4) td:nth-child(3)"
+            ).innerHTML) -1
             if (
               response.board[0] === "X" &&
               response.board[1] === "X" &&
@@ -236,6 +247,17 @@ class Provider extends Component {
             }
           } else if (response.result_code === 2) {
             this.setState({ gameResult: "Computer win" });
+            document.querySelector(
+              ".right > :nth-child(4) tr:nth-child(2) td:nth-child(3)"
+            ).innerHTML =
+              parseInt(document.querySelector(
+                ".right > :nth-child(4) tr:nth-child(2) td:nth-child(3)"
+              ).innerHTML) + 1;
+              document.querySelector(
+                ".right > :nth-child(4) tr:nth-child(4) td:nth-child(3)"
+              ).innerHTML = parseInt(document.querySelector(
+                ".right > :nth-child(4) tr:nth-child(4) td:nth-child(3)"
+              ).innerHTML) -1
             if (
               response.board[0] === "O" &&
               response.board[1] === "O" &&
@@ -287,6 +309,17 @@ class Provider extends Component {
             }
           } else if (response.result_code === -1) {
             this.setState({ gameResult: "Draw" });
+            document.querySelector(
+              ".right > :nth-child(4) tr:nth-child(3) td:nth-child(3)"
+            ).innerHTML = 
+            parseInt(document.querySelector(
+              ".right > :nth-child(4) tr:nth-child(3) td:nth-child(3)"
+            ).innerHTML) +1
+            document.querySelector(
+              ".right > :nth-child(4) tr:nth-child(4) td:nth-child(3)"
+            ).innerHTML = parseInt(document.querySelector(
+              ".right > :nth-child(4) tr:nth-child(4) td:nth-child(3)"
+            ).innerHTML) -1
           } else {
             this.setState({ gamePlayed: response.board });
           }
@@ -341,7 +374,7 @@ class Provider extends Component {
     redirectLogin: false,
     renderRedirectLogin: () => {
       if (this.state.redirectLogin) {
-        this.setState({redirectLogin: false})
+        this.setState({ redirectLogin: false });
         return <Redirect to="/login" />;
       }
     },
@@ -353,6 +386,9 @@ class Provider extends Component {
       }
     },
     login: (e, func) => {
+      this.setState({ gameError: null });
+      this.setState({ gameResult: null });
+      this.setState({ gameMessage: null });
       const email = e.target.parentElement.querySelector("input[type=email]")
         .value;
       const password = e.target.parentElement.querySelector(
@@ -379,13 +415,13 @@ class Provider extends Component {
               func(email);
               this.setState({ redirectHome: true });
             } else {
-              this.setState({logError: "An error occured"})
+              this.setState({ logError: "An error occured" });
               console.log("error");
             }
           })
           .catch((error) => {
-            this.setState({logError: "An error occured"})
-          })
+            this.setState({ logError: "An error occured" });
+          });
       }
     },
     register: (e) => {
