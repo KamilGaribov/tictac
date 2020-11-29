@@ -141,6 +141,7 @@ class Provider extends Component {
           } else {
             this.setState({ gamePlayed: response.board });
             this.setState({ line: null });
+            this.setState( {gameMessage: "Game continues"})
           }
         })
         .catch((error) => {

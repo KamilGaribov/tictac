@@ -2,7 +2,7 @@ import "./Home.css";
 import { Consumer } from "./Provider";
 
 function Home({ props }) {
-  const stat = props.state.statistics
+  const stat = props.state.statistics;
   const games = props.state.games;
   return (
     <Consumer>
@@ -12,10 +12,14 @@ function Home({ props }) {
             <div className="home-inner">
               <div className="left">
                 <div className="new-game-btn">
-                  <button onClick={() => {
-                      state.newGame();
+                  <button
+                    onClick={() => {
                       props.state.newgame();
-                    }}>new game</button>
+                      state.newGame();
+                    }}
+                  >
+                    new game
+                  </button>
                 </div>
                 <div>
                   <h3>{state.gameMessage ? state.gameMessage : null}</h3>
@@ -23,7 +27,11 @@ function Home({ props }) {
                   <h3>{state.gameError ? state.gameError : null}</h3>
                 </div>
                 {state.game != null && props.state.currentGame === true ? (
-                  <div className={state.line != null ? `${state.line} game` : "game"}>
+                  <div
+                    className={
+                      state.line != null ? `${state.line} game` : "game"
+                    }
+                  >
                     {state.game.board.map((item, i) => {
                       return (
                         <div
@@ -109,41 +117,75 @@ function Home({ props }) {
                   </table>
                 ) : null}
                 <div>
-                  {props.state.previousUrl ? <span onClick={props.state.previous}>previous</span> : null}
-                  {props.state.nextUrl ? <span onClick={props.state.next}>next</span> : null}
+                  {props.state.previousUrl ? (
+                    <span onClick={props.state.previous}>previous</span>
+                  ) : null}
+                  {props.state.nextUrl ? (
+                    <span onClick={props.state.next}>next</span>
+                  ) : null}
                 </div>
                 <table>
                   <tbody>
                     <tr>
-                      <td onClick={() => {props.state.filter(1)}}>win</td>
+                      <td
+                        onClick={() => {
+                          props.state.filter(1);
+                        }}
+                      >
+                        win
+                      </td>
                       <td>
                         <img alt="img" src="win.png" />
                       </td>
                       <td>{stat ? stat.win : null}</td>
                     </tr>
                     <tr>
-                      <td onClick={() => {props.state.filter(2)}}>lose</td>
+                      <td
+                        onClick={() => {
+                          props.state.filter(2);
+                        }}
+                      >
+                        lose
+                      </td>
                       <td>
                         <img alt="img" src="lose.png" />
                       </td>
                       <td>{stat ? stat.lose : null}</td>
                     </tr>
                     <tr>
-                      <td onClick={() => {props.state.filter(-1)}}>draw</td>
+                      <td
+                        onClick={() => {
+                          props.state.filter(-1);
+                        }}
+                      >
+                        draw
+                      </td>
                       <td>
                         <img alt="img" src="equal.png" />
                       </td>
                       <td>{stat ? stat.draw : null}</td>
                     </tr>
                     <tr>
-                      <td onClick={() => {props.state.filter(0)}}>continue</td>
+                      <td
+                        onClick={() => {
+                          props.state.filter(0);
+                        }}
+                      >
+                        continue
+                      </td>
                       <td>
                         <img alt="img" src="continue.png" />
                       </td>
                       <td>{stat ? stat.continue : null}</td>
                     </tr>
                     <tr>
-                      <td onClick={() => {props.state.getGames()}}>all</td>
+                      <td
+                        onClick={() => {
+                          props.state.getGames();
+                        }}
+                      >
+                        all
+                      </td>
                       <td></td>
                       <td>{stat ? stat.all : null}</td>
                     </tr>
