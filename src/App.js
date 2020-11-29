@@ -11,6 +11,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       getGames: () => {
+        this.setState({ previousUrl: null });
         let form2 = {
           method: "GET",
           headers: {
@@ -41,20 +42,14 @@ export default class App extends React.Component {
           .then((res) => res.json())
           .then((response) => {
             this.setState({ statistics: response.data });
-            // this.setState({all: response.data.all})
-            // this.setState({continue: response.data.continue})
           })
           .catch((error) => {
             console.log(error);
           });
       },
-      // all: null,
-      // continue: null,
       newgame: () => {
         this.setState({ currentGame: true });
         this.state.getGames();
-        // this.setState({all: this.state.all+1})
-        // this.setState({continue: this.state.continue+1})
       },
       filter: (n) => {
         let form = {
@@ -69,6 +64,8 @@ export default class App extends React.Component {
           .then((res) => res.json())
           .then((response) => {
             this.setState({ games: response.results });
+            this.setState({ previousUrl: null });
+            this.setState({ nextUrl: response.next });
           })
           .catch((error) => {
             console.log(error);
