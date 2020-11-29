@@ -12,14 +12,17 @@ function Home({ props }) {
             <div className="home-inner">
               <div className="left">
                 <div className="new-game-btn">
-                  <button onClick={state.newGame}>new game</button>
+                  <button onClick={() => {
+                      state.newGame();
+                      props.state.newgame();
+                    }}>new game</button>
                 </div>
                 <div>
-                  <h3>{state.gameMessage ? state.gameMessage : null}</h3>
-                  <h3>{state.gameResult ? state.gameResult : null}</h3>
-                  <h3>{state.gameError ? state.gameError : null}</h3>
+                  <h3>{state.gameMessage && props.state.currentGame === true ? state.gameMessage : null}</h3>
+                  <h3>{state.gameResult && props.state.currentGame === true ? state.gameResult : null}</h3>
+                  <h3>{state.gameError && props.state.currentGame === true ? state.gameError : null}</h3>
                 </div>
-                {state.game != null ? (
+                {state.game != null && props.state.currentGame === true ? (
                   <div className={state.line != null ? `${state.line} game` : "game"}>
                     {state.game.board.map((item, i) => {
                       return (
@@ -77,6 +80,7 @@ function Home({ props }) {
                             <td
                               onClick={() => {
                                 state.watchGame(item.id);
+                                props.state.newgame();
                               }}
                             >
                               {item.created_at.split("T")[0]} -{" "}
@@ -105,13 +109,8 @@ function Home({ props }) {
                   </table>
                 ) : null}
                 <div>
-                  {/* {next ? ( */}
                   {props.state.previousUrl ? <span onClick={props.state.previous}>previous</span> : null}
                   {props.state.nextUrl ? <span onClick={props.state.next}>next</span> : null}
-                  {/* ) : null} */}
-                  {/* <a className="page-active">1</a>
-              <a>2</a>
-              <a>3</a> */}
                 </div>
                 <table>
                   <tbody>
@@ -142,6 +141,11 @@ function Home({ props }) {
                         <img alt="img" src="continue.png" />
                       </td>
                       <td>{stat ? stat.continue : null}</td>
+                    </tr>
+                    <tr>
+                      <td onClick={() => {props.state.getGames()}}>all</td>
+                      <td></td>
+                      <td>{stat ? stat.all : null}</td>
                     </tr>
                   </tbody>
                 </table>

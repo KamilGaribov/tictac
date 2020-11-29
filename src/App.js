@@ -46,6 +46,10 @@ export default class App extends React.Component {
               console.log(error);
             });
       },
+      newgame: () => {
+        this.setState({currentGame: true})
+        this.state.getGames()
+      },
       filter: (n) => {
         let form = {
           method: "GET",
@@ -113,6 +117,7 @@ export default class App extends React.Component {
             console.log(error);
           });
       },
+      currentGame: false,
     };
   }
   logout = () => {
@@ -120,6 +125,7 @@ export default class App extends React.Component {
     localStorage.removeItem("token");
     this.setState({ logged: false });
     this.setState({ username: null });
+    this.setState({ currentGame: false})
   };
   componentDidMount() {
     if (!localStorage.getItem("token")) {

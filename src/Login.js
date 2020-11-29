@@ -12,7 +12,6 @@ export default function Login({ props }) {
             <input name="email" placeholder="email" type="email" />
             <input name="password" placeholder="password" type="password" />
             {state.renderRedirectHome()}
-            {/* {props.setLogged()} */}
             <button
               type="button"
               onClick={(e) => state.login(e, props.state.setLogged)}

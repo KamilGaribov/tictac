@@ -16,6 +16,7 @@ class Provider extends Component {
     gamePlayed: false,
     game: null,
     watchGame: (id) => {
+      this.setState({game: null})
       this.setState({ gameResult: null });
       this.setState({ gameMessage: null });
       this.setState({ gameError: null });
@@ -144,8 +145,6 @@ class Provider extends Component {
         })
         .catch((error) => {
           console.log(error);
-          // this.setState({ logged: false });
-          // this.setState({ username: null });
         });
     },
     startnewgame: () => {
@@ -186,8 +185,106 @@ class Provider extends Component {
           this.setState({ game: response });
           if (response.result_code === 1) {
             this.setState({ gameResult: "You win!" });
+            if (
+              response.board[0] === "X" &&
+              response.board[1] === "X" &&
+              response.board[2] === "X"
+            ) {
+              this.setState({ line: "one" });
+            } else if (
+              response.board[3] === "X" &&
+              response.board[4] === "X" &&
+              response.board[5] === "X"
+            ) {
+              this.setState({ line: "two" });
+            } else if (
+              response.board[6] === "X" &&
+              response.board[7] === "X" &&
+              response.board[8] === "X"
+            ) {
+              this.setState({ line: "three" });
+            } else if (
+              response.board[0] === "X" &&
+              response.board[3] === "X" &&
+              response.board[6] === "X"
+            ) {
+              this.setState({ line: "four" });
+            } else if (
+              response.board[1] === "X" &&
+              response.board[4] === "X" &&
+              response.board[7] === "X"
+            ) {
+              this.setState({ line: "five" });
+            } else if (
+              response.board[2] === "X" &&
+              response.board[5] === "X" &&
+              response.board[8] === "X"
+            ) {
+              this.setState({ line: "six" });
+            } else if (
+              response.board[0] === "X" &&
+              response.board[4] === "X" &&
+              response.board[8] === "X"
+            ) {
+              this.setState({ line: "seven" });
+            } else if (
+              response.board[2] === "X" &&
+              response.board[4] === "X" &&
+              response.board[6] === "X"
+            ) {
+              this.setState({ line: "eight" });
+            }
           } else if (response.result_code === 2) {
             this.setState({ gameResult: "Computer win" });
+            if (
+              response.board[0] === "O" &&
+              response.board[1] === "O" &&
+              response.board[2] === "O"
+            ) {
+              this.setState({ line: "one" });
+            } else if (
+              response.board[3] === "O" &&
+              response.board[4] === "O" &&
+              response.board[5] === "O"
+            ) {
+              this.setState({ line: "two" });
+            } else if (
+              response.board[6] === "O" &&
+              response.board[7] === "O" &&
+              response.board[8] === "O"
+            ) {
+              this.setState({ line: "three" });
+            } else if (
+              response.board[0] === "O" &&
+              response.board[3] === "O" &&
+              response.board[6] === "O"
+            ) {
+              this.setState({ line: "four" });
+            } else if (
+              response.board[1] === "O" &&
+              response.board[4] === "O" &&
+              response.board[7] === "O"
+            ) {
+              this.setState({ line: "five" });
+            } else if (
+              response.board[2] === "O" &&
+              response.board[5] === "O" &&
+              response.board[8] === "O"
+            ) {
+              this.setState({ line: "six" });
+            } else if (
+              response.board[0] === "O" &&
+              response.board[4] === "O" &&
+              response.board[8] === "O"
+            ) {
+              this.setState({ line: "seven" });
+            } else if (
+              response.board[2] === "O" &&
+              response.board[4] === "O" &&
+              response.board[6] === "O"
+            ) {
+              this.setState({ line: "eight" });
+            }
           } else if (response.result_code === -1) {
             this.setState({ gameResult: "Draw" });
           } else {
@@ -216,7 +313,7 @@ class Provider extends Component {
         .then((res) => res.json())
         .then((response) => {
           this.setState({ game: response });
-          this.setState({ gameMessage: `Game id:${response.id} started` });
+          this.setState({ gameMessage: `Game started` });
           this.setState({ gameId: response.id });
         })
         .catch((error) => {
@@ -270,7 +367,6 @@ class Provider extends Component {
           }),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
-            // "Authentication": "JWT hda5da7sd6as8d"
           },
         };
         let url = `http://localhost:8000/api/v1/login/`;
@@ -301,16 +397,12 @@ class Provider extends Component {
       if (password && email) {
         let form = {
           method: "POST",
-          // parses: "application/json application/x-www-form-urlencoded multipart/form-data",
           body: JSON.stringify({
             email: email,
             password: password,
-            // email: "root@gmail.com",
-            // password: "root",
           }),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
-            // "Authorization": localStorage.getItem("token"),
           },
         };
         let url = `http://localhost:8000/api/v1/register/`;
@@ -345,6 +437,3 @@ class Provider extends Component {
 const Consumer = Context.Consumer;
 export default Provider;
 export { Consumer };
-
-// "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjA2NTAxNDkwLCJqdGkiOiJjMzcyOTZjMzY2NTA0NmE2YWJhNTAxY2VlNTQ3OTJkZSIsInVzZXJfaWQiOjE1fQ.52r7P0TYK0LUg3ZEWW7DZ7PY_b_TPQ31to07RAztZKA"
-// "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYwNzcxMDc5MCwianRpIjoiNmRhOWNiYjA4Y2QyNGQ0MWFhMTA1NDQ2ZDIzM2QwYTkiLCJ1c2VyX2lkIjoxNX0.vkMm9G5aae_FhAcXLFSh7u0V5PaVytm7j5IZgG7gS-0"
