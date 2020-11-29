@@ -26,7 +26,38 @@ function Home({ props }) {
                   <h3>{state.gameResult ? state.gameResult : null}</h3>
                   <h3>{state.gameError ? state.gameError : null}</h3>
                 </div>
-                {state.game != null && props.state.currentGame === true ? (
+                {props.state.localGame != null ? (
+                  <div
+                    className={
+                      state.line != null ? `${state.line} game` : "game"
+                    }
+                  >
+                    {props.state.gameboard.board.map((item, i) => {
+                      return (
+                        <div
+                          key={i}
+                          onClick={(e) => {
+                            state.play(e, props.state.getGames);
+                          }}
+                        >
+                          {item === "X" || item === "O" ? (
+                            <img
+                              src={
+                                item === "X"
+                                  ? "x.png"
+                                  : item === "O"
+                                  ? "o.png"
+                                  : null
+                              }
+                              alt={i}
+                            />
+                          ) : null}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )
+                : state.game != null && props.state.currentGame === true ? (
                   <div
                     className={
                       state.line != null ? `${state.line} game` : "game"

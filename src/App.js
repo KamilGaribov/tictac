@@ -48,8 +48,6 @@ export default class App extends React.Component {
             console.log(error);
           });
       },
-      // all: null,
-      // continue: null,
       newgame: () => {
         this.setState({ currentGame: true });
         this.state.getGames();
@@ -134,6 +132,28 @@ export default class App extends React.Component {
     this.setState({ currentGame: false });
   };
   componentDidMount() {
+    if (localStorage.getItem("game")) {
+      this.setState({ localGame: localStorage.getItem("game") });
+      let form = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      };
+      let url = `http://localhost:8000/api/v1/games/${localStorage.getItem(
+        "game"
+      )}/`;
+      fetch(url, form)
+        .then((res) => res.json())
+        .then((response) => {
+          this.setState({ gameboard: response });
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
     if (!localStorage.getItem("token")) {
       this.setState({ logged: false });
       return this.setState({ username: null });

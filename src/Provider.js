@@ -15,7 +15,12 @@ class Provider extends Component {
     gameId: null,
     gamePlayed: false,
     game: null,
+    setLocal: () => {
+      this.setState({ localGame: localStorage.getItem("game") });
+      this.state.watchGame(localStorage.getItem("game"));
+    },
     watchGame: (id) => {
+      localStorage.setItem("game", `${id}`);
       this.setState({ game: null });
       this.setState({ gameResult: null });
       this.setState({ gameMessage: null });
@@ -141,7 +146,7 @@ class Provider extends Component {
           } else {
             this.setState({ gamePlayed: response.board });
             this.setState({ line: null });
-            this.setState( {gameMessage: "Game continues"})
+            this.setState({ gameMessage: "Game continues" });
           }
         })
         .catch((error) => {
@@ -153,6 +158,27 @@ class Provider extends Component {
       this.setState({ gameError: "Start new game" });
     },
     play: (e, func) => {
+      if (this.state.game == null) {
+        let form = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        };
+        let url = `http://localhost:8000/api/v1/games/${localStorage.getItem(
+          "game"
+        )}/`;
+        fetch(url, form)
+          .then((res) => res.json())
+          .then((response) => {
+            this.setState({ gameboard: response });
+            this.setState({ game: response });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
       if (this.state.gameWatch) {
         return this.setState({ gameError: "Game has finished" });
       }
@@ -180,14 +206,16 @@ class Provider extends Component {
           Authorization: localStorage.getItem("token"),
         },
       };
-      let url = `http://localhost:8000/api/v1/games/${this.state.gameId}/check/`;
+      let url = `http://localhost:8000/api/v1/games/${localStorage.getItem(
+        "game"
+      )}/check/`;
       fetch(url, form)
         .then((res) => res.json())
         .then((response) => {
           this.setState({ game: response });
           if (response.result_code === 1) {
             this.setState({ gameResult: "You win!" });
-            func()
+            func();
             if (
               response.board[0] === "X" &&
               response.board[1] === "X" &&
@@ -239,7 +267,7 @@ class Provider extends Component {
             }
           } else if (response.result_code === 2) {
             this.setState({ gameResult: "Computer win" });
-            func()
+            func();
             if (
               response.board[0] === "O" &&
               response.board[1] === "O" &&
@@ -291,7 +319,7 @@ class Provider extends Component {
             }
           } else if (response.result_code === -1) {
             this.setState({ gameResult: "Draw" });
-            func()
+            func();
           } else {
             this.setState({ gamePlayed: response.board });
           }
@@ -320,6 +348,7 @@ class Provider extends Component {
           this.setState({ game: response });
           this.setState({ gameMessage: `Game started` });
           this.setState({ gameId: response.id });
+          localStorage.setItem("game", response.id);
         })
         .catch((error) => {
           console.log(error);
